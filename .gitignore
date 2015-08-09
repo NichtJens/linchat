@@ -26,6 +26,7 @@
 *.lib
 
 # Executables
+linchat
 *.exe
 *.out
 *.app
