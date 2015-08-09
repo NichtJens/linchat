@@ -119,8 +119,11 @@ static void InitScoreboard()
 		// Wipe it out.
 		memset(& blankuser, 0, sizeof(blankuser));
 		blankuser.connected = false;
+		ssize_t nwritten;
 		for (int i=0; i<ScoreboardSize; i++) {
-			write(scoreboardfd, &blankuser, sizeof(blankuser));
+			nwritten = write(scoreboardfd, &blankuser, sizeof(blankuser));
+			if (nwritten != sizeof(blankuser))
+				throw MyException("Scoreboard write");
 		}
 	}
 	// Now let's mmap it.
