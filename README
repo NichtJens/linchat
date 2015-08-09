@@ -1,0 +1,34 @@
+Linchat 1.0
+By Mark Robson - mark@vectrex.org.uk
+
+Licenced under the GNU GPL, see LICENCE.txt for details.
+
+Linchat is a simple chat program for local Unix users. It has been tested
+only under Linux but may work under other Unixlike OSs too.
+
+It only works locally, i.e. ON THE SAME MACHINE. For this reason, it's fairly
+secure against external eavesdroppers if the connections to that machine are secure.
+However, don't assume that other local users cannot eavesdrop.
+
+This is intended as a useful multi-user (>2) replacement for talk. ytalk supports
+more than two users, but becomes useless after about 3 users or so.
+
+Linchat requires no separate server and does not require root access to install.
+
+how to install: put the binary in /usr/local/bin or anywhere else you like really.
+
+How to uninstall: delete it
+
+Stores no config files anywhere. Keeps only temp files in /tmp
+
+---
+
+How it works:
+
+Upon startup, the program creates a directory /tmp/linchatdir if it
+does not already exist.
+
+A file called "scoreboard" is created which stores who is logged on at any
+given moment. This file is mmaped by each instance of linchat.
+
+Each client creates a unix socket in this directory with its PID.
