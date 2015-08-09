@@ -23,7 +23,8 @@
 #include <errno.h>
 #include <signal.h>
 
-using namespace std;
+using std::string;
+using std::list;
 
 #include "ui.h"
 #include "common.h"
