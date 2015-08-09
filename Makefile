@@ -27,7 +27,7 @@ HEADERS=ui.h common.h userstruct.h
 # STRIPFLAGS=
 # Production build
 CCPLUS=g++
-CFLAGS=-O -Wall -Werror -Wno-write-strings
+CFLAGS=-O -Wall -Werror
 STRIPFLAGS=-Wl,-s
 #
 LDFLAGS=-lcurses

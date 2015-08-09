@@ -24,11 +24,11 @@ extern const char * ProgramName;
 
 struct MyException
 {
-	MyException(char *s) {
+	MyException(const char *s) {
 		excuse = s;
 		errnum = errno;
 	}
-	char *excuse;
+	const char *excuse;
 	int errnum;
 };
 
