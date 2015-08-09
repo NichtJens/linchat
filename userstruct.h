@@ -38,17 +38,17 @@ typedef enum {
 } UserStatus;
 extern UserStatus myStatus;
 
-typedef struct UserData {
+typedef struct {
 	bool connected;
 	UserStatus status;
 	int pid; // So we can check etc
 	char name[MaxUsername];
-};
+} UserData;
 
 const int MaxMessageSize = 900;
 
-typedef struct ChatPacket {
+typedef struct {
 	int slotnum; // Sender
 	ChatCommand cmd;
 	char message[MaxMessageSize];
-};
+} ChatPacket;
