@@ -80,7 +80,7 @@ void RefreshUsersWindow()
 	// whline(userwin,0,userwinw);
 	// mvwvline(userwin,1,0,0,mainwinh);
 	int row=1;
-	for (UsersIterator i = users.begin(); i != users.end(); i++)
+	for (UsersIterator i = users.begin(); i != users.end(); ++i)
 	{
 		mvwaddstr(userwin,row++, 2 , (*i).name.c_str());
 		wclrtoeol(userwin);
@@ -89,7 +89,7 @@ void RefreshUsersWindow()
 	box(userwin,0,0);
 	mvwaddstr(userwin,0,2 , "User list");
 	row=1;
-	for (UsersIterator i = users.begin(); i != users.end(); i++)
+	for (UsersIterator i = users.begin(); i != users.end(); ++i)
 	{
 		char c = (*i).statuschar;
 		if (c != '\0')
@@ -327,7 +327,7 @@ static void RefreshMainWindow()
 {
 	wclear(mainwin);
 	wmove(mainwin,mainwinh-1,0);
-	for (MessagesIterator i = messages.begin(); i != messages.end(); i++)
+	for (MessagesIterator i = messages.begin(); i != messages.end(); ++i)
 	{
 		MessageLine ml = *i;
 		ShowMessageLine(ml);
