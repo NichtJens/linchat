@@ -39,7 +39,8 @@
 #include "userstruct.h"
 #include "ui.h"
 
-using namespace std;
+using std::cerr;
+using std::endl;
 
 const int MaxPacket = 1000;
 const char * SocketDir = "/tmp/linchatdir";
