@@ -17,6 +17,7 @@
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 //  USA.
 //
+
 #include <string>
 #include <list>
 #include <curses.h>
@@ -79,16 +80,16 @@ void RefreshUsersWindow()
 	// wclear(userwin);
 	// whline(userwin,0,userwinw);
 	// mvwvline(userwin,1,0,0,mainwinh);
-	int row=1;
+	int row = 1;
 	for (UsersIterator i = users.begin(); i != users.end(); ++i)
 	{
-		mvwaddstr(userwin,row++, 2 , (*i).name.c_str());
+		mvwaddstr(userwin, row++, 2, (*i).name.c_str());
 		wclrtoeol(userwin);
 	}
 	wclrtobot(userwin);
-	box(userwin,0,0);
-	mvwaddstr(userwin,0,2 , "User list");
-	row=1;
+	box(userwin, 0, 0);
+	mvwaddstr(userwin, 0, 2, "User list");
+	row = 1;
 	for (UsersIterator i = users.begin(); i != users.end(); ++i)
 	{
 		char c = (*i).statuschar;
@@ -118,7 +119,7 @@ void AddUser(char statuschar, const char *name)
 static void UpdateInput()
 {
 	// wclear(entrywin);
-	wmove(entrywin,0,0);
+	wmove(entrywin, 0, 0);
 	wprintw(entrywin, ">> %s", inputline.c_str());
 	wclrtobot(entrywin);
 	wrefresh(entrywin);
@@ -127,7 +128,7 @@ static void UpdateInput()
 	{
 		myStatus = UserNormal;
 	}
-	if (! isEmpty && (myStatus == UserNormal))
+	if (!isEmpty && (myStatus == UserNormal))
 	{
 		myStatus = UserTyping;
 	}
@@ -158,23 +159,23 @@ static void SetupWindows()
 {
 	int maxx, maxy;
 	DeleteWindows();
-	getmaxyx(stdscr,maxy,maxx);
+	getmaxyx(stdscr, maxy, maxx);
 	userwinw = MaxUsername + 2;
 	mainwinh = maxy-2;
 	mainwinw = maxx - userwinw;
-	mainwin = newwin(mainwinh, mainwinw, 0,0);
+	mainwin = newwin(mainwinh, mainwinw, 0, 0);
 	userwin = newwin(mainwinh, userwinw, 0, (maxx - userwinw));
 	entrywin = newwin(2, maxx, maxy-2, 0);
 	// headingwin = newwin(1, mainwinw, 0,0);
 	// wprintw(headingwin, "%s", ProgramName);
-	keypad(entrywin,true);
-	scrollok(entrywin,true);
-	scrollok(mainwin,true);
-	wmove(mainwin,mainwinh-1,0);
+	keypad(entrywin, true);
+	scrollok(entrywin, true);
+	scrollok(mainwin, true);
+	wmove(mainwin, mainwinh-1, 0);
 	// Set up the users window colours
-	init_pair(1,COLOR_WHITE, COLOR_BLUE);
+	init_pair(1, COLOR_WHITE, COLOR_BLUE);
 	wcolor_set(userwin, 1, 0);
-	wattron(userwin,A_BOLD);
+	wattron(userwin, A_BOLD);
 	wbkgdset(userwin, COLOR_PAIR(1));
 	wclear(userwin);
 
@@ -257,7 +258,7 @@ void ProcessKeyboardEvent()
 		UnIdle();
 		if (inputline.length() >0)
 		{
-			inputline = inputline.substr(0,inputline.length()-1);
+			inputline = inputline.substr(0, inputline.length()-1);
 		}
 		UpdateInput();
 		return;
@@ -315,18 +316,18 @@ static void ShowMessageLine(MessageLine &msgline)
 	WrapString(str, mainwinw);
 	str = str.substr(msgline.prefix.length()); // cut the prefix back off
 	// (assuming it hasn't been wraped)
-	waddstr(mainwin,"\n"); // Newline
-	wattron(mainwin,A_BOLD); // Put the prefix in bold
-	waddstr(mainwin,msgline.prefix.c_str());
-	wattroff(mainwin,A_BOLD); // put the line in normal
-	waddstr(mainwin,str.c_str());
+	waddstr(mainwin, "\n"); // Newline
+	wattron(mainwin, A_BOLD); // Put the prefix in bold
+	waddstr(mainwin, msgline.prefix.c_str());
+	wattroff(mainwin, A_BOLD); // put the line in normal
+	waddstr(mainwin, str.c_str());
 	//wprintw(mainwin, "\n%s", str.c_str());
 }
 
 static void RefreshMainWindow()
 {
 	wclear(mainwin);
-	wmove(mainwin,mainwinh-1,0);
+	wmove(mainwin, mainwinh-1, 0);
 	for (MessagesIterator i = messages.begin(); i != messages.end(); ++i)
 	{
 		MessageLine ml = *i;
@@ -339,7 +340,7 @@ void ShowMessage(const char *title, const char *msg)
 	MessageLine msgline;
 	msgline.prefix = title;
 	msgline.message = msg;
-	ShowMessageLine( msgline);
+	ShowMessageLine(msgline);
 	// Add it to our buffer.
 	messages.push_back(msgline);
 	if (messages.size() > MaxMessages)

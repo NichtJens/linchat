@@ -17,15 +17,14 @@
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 //  USA.
 //
-#include <iostream>
 
+#include <iostream>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <string.h>
 #include <stdio.h>
 #include <sys/mman.h>
 #include <stdlib.h>
@@ -101,13 +100,11 @@ static void InitScoreboard()
 {
 	// Make the directory.
 	// Try to create it
-	scoreboardfd = open(ScoreboardFilename, O_RDWR | O_CREAT | O_EXCL,
-			0666
-			);
+	scoreboardfd = open(ScoreboardFilename, O_RDWR | O_CREAT | O_EXCL, 0666);
 	// If that fails, let's open the existing one.
 	if (scoreboardfd == -1) {
 		scoreboardfd = open(ScoreboardFilename, O_RDWR);
-		if (scoreboardfd == -1) 
+		if (scoreboardfd == -1)
 			// Ah, problem.
 			throw MyException("Scoreboard file");
 		LockScoreboard(true);
@@ -133,11 +130,11 @@ static void InitScoreboard()
 			MAP_SHARED, // flags
 			scoreboardfd, // fd
 			0); // offset
-	if (ptr == MAP_FAILED) 
+	if (ptr == MAP_FAILED)
 		throw MyException("mmap");
 	scoreboard = (UserData *) ptr;
 	// Ok, so far so good. Now add ourselves in.
-	int i=0;
+	int i = 0;
 	do {
 		if (scoreboard[i].connected == false)
 			break;
@@ -193,9 +190,9 @@ static void SigHandler(int sig)
 
 static void InitSignals()
 {
-	signal(SIGINT, SigHandler);	
+	signal(SIGINT, SigHandler);
 	signal(SIGHUP, SigHandler);
-	signal(SIGTERM, SigHandler);	
+	signal(SIGTERM, SigHandler);
 }
 
 void StartUp()
@@ -254,7 +251,7 @@ static void SendPacket(ChatPacket *p)
 			struct sockaddr_un targetaddr;
 			targetaddr.sun_family = AF_UNIX;
 			sprintf(targetaddr.sun_path, "%s/%d", SocketDir, scoreboard[i].pid);
-			int result = 
+			int result =
 				sendto(clientsock, p, sizeof(ChatPacket), 0,
 						(struct sockaddr *) & targetaddr, sizeof(targetaddr));
 			if (result == -1)
@@ -271,7 +268,7 @@ static void SayHello()
 	ChatPacket p;
 	p.cmd = Connect;
 	strcpy(p.message, "Hello");
-	SendPacket( &p);
+	SendPacket(&p);
 	connected = true;
 }
 
@@ -281,12 +278,12 @@ static void SayGoodbye()
 	ChatPacket p;
 	p.cmd = Disconnect;
 	strcpy(p.message, "Goodbye");
-	SendPacket( &p);
+	SendPacket(&p);
 }
 
 void CleanUp()
 {
-	if (! needCleanup)
+	if (!needCleanup)
 		return;
 	// Ensure no recursion in case cleanup gets called inside cleanup.
 	needCleanup = false;
@@ -321,10 +318,10 @@ static void ProcessNetworkEvent()
 	char buf[MaxMessageSize + 100];
 	// Bad things check.
 	if ((p.slotnum <0) || (p.slotnum >= ScoreboardSize))
-		return; 
+		return;
 	// Another bad things check - people who aren't logged on should not be saying anything.
 	// But they might have disconnected.
-	if (! scoreboard[p.slotnum].connected)
+	if (!scoreboard[p.slotnum].connected)
 		if (p.cmd != Disconnect)
 			return;
 	char *name = scoreboard[p.slotnum].name;
@@ -367,7 +364,7 @@ static void CheckStatus()
 	// Send a packet to tell people
 	ChatPacket p;
 	p.cmd = StatusUpdate;
-	SendPacket( &p);
+	SendPacket(&p);
 	// Update our own display.
 	UpdateUsers();
 	RefreshAll();
@@ -435,7 +432,7 @@ void DoSay(const char *msg)
 	ChatPacket p;
 	p.cmd = Say;
 	strncpy(p.message, msg, sizeof(p.message));
-	SendPacket( &p);
+	SendPacket(&p);
 	// Print what we said locally.
 	char buf[MaxMessageSize + 100];
 	snprintf(buf, sizeof(buf), "*%s* ", myusername);
@@ -448,7 +445,7 @@ static void MainLoop()
 	UpdateUsers();
 	SayHello();
 	RefreshAll();
-	while (! quitPending)
+	while (!quitPending)
 	{
 		WaitForEvent();
 	}
