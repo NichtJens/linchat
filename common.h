@@ -17,6 +17,10 @@
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 //  USA.
 //
+
+#ifndef LINCHAT_COMMON_H
+#define LINCHAT_COMMON_H
+
 extern const int MaxPacket;
 extern const char * SocketDir;
 extern bool quitPending;
@@ -34,3 +38,5 @@ struct MyException
 
 void DoSay(const char *msg);
 void UnIdle();
+
+#endif  // LINCHAT_COMMON_H

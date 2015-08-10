@@ -18,10 +18,13 @@
 //  USA.
 //
 
+#ifndef LINCHAT_USERSTRUCT_H
+#define LINCHAT_USERSTRUCT_H
+
 extern const char * ScoreboardFilename;
 const int ScoreboardSize = 30;
 const int MaxUsername = 14;
-const int IdleSeconds = 300; // Set to 5 or 10 for debug.
+const int IdleSeconds = 300;  // Set to 5 or 10 for debug.
 
 typedef enum {
 	Connect,
@@ -41,14 +44,16 @@ extern UserStatus myStatus;
 typedef struct {
 	bool connected;
 	UserStatus status;
-	int pid; // So we can check etc
+	int pid;  // So we can check etc
 	char name[MaxUsername];
 } UserData;
 
 const int MaxMessageSize = 900;
 
 typedef struct {
-	int slotnum; // Sender
+	int slotnum;  // Sender
 	ChatCommand cmd;
 	char message[MaxMessageSize];
 } ChatPacket;
+
+#endif  // LINCHAT_USERSTRUCT_H

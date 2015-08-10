@@ -17,6 +17,10 @@
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 //  USA.
 //
+
+#ifndef LINCHAT_UI_H
+#define LINCHAT_UI_H
+
 void InitUi();
 void FinishUi();
 void RefreshAll();
@@ -26,3 +30,5 @@ void AddUser(char statuschar, const char *name);
 void ProcessKeyboardEvent();
 void ShowMessage(const char *title, const char *msg);
 bool CheckUiResize();
+
+#endif  // LINCHAT_UI_H
