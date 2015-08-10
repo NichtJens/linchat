@@ -110,8 +110,7 @@ static void InitScoreboard()
 			// Ah, problem.
 			throw MyException("Scoreboard file");
 		LockScoreboard(true);
-	} else
-	{
+	} else {
 		// We just created a new scoreboard, hooray!
 		// Initialise it.
 		LockScoreboard(true);
@@ -119,9 +118,8 @@ static void InitScoreboard()
 		// Wipe it out.
 		memset(& blankuser, 0, sizeof(blankuser));
 		blankuser.connected = false;
-		ssize_t nwritten;
 		for (int i=0; i<ScoreboardSize; i++) {
-			nwritten = write(scoreboardfd, &blankuser, sizeof(blankuser));
+			ssize_t  nwritten = write(scoreboardfd, &blankuser, sizeof(blankuser));
 			if (nwritten != sizeof(blankuser))
 				throw MyException("Scoreboard write");
 		}
@@ -459,14 +457,14 @@ int main(int argc, char *argv[])
 {
 	try {
 		StartUp();
-	} catch (MyException ex) {
+	} catch (MyException &ex) {
 		cerr << "Exception starting up: " << ex.excuse << endl;
 		return 1;
 	}
 	atexit(CleanUp);
 	try {
 		MainLoop();
-	} catch (MyException ex) {
+	} catch (MyException &ex) {
 		CleanUp();
 		cerr << "Exception: " << ex.excuse << ex.errnum << endl;
 		return 1;
