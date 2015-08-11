@@ -23,6 +23,7 @@
 #include <curses.h>
 #include <errno.h>
 #include <signal.h>
+#include <sys/ttydefaults.h>
 
 using std::string;
 using std::list;
@@ -271,11 +272,16 @@ void ProcessKeyboardEvent()
 		UpdateInput();
 		return;
 	}
-	if (k == 21) {
+	if (k == CTRL('u')) {
 		UnIdle();
 		// erase line, ^U
 		inputline = "";
 		UpdateInput();
+		return;
+	}
+	if (k == CTRL('d'))
+	{
+		quitPending = true;
 		return;
 	}
 	/*
