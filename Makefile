@@ -18,26 +18,31 @@
 #  USA.
 #
 
+PROGRAM=linchat
 OBJECTS=linchat.o ui.o
-
 HEADERS=ui.h common.h userstruct.h
-# Debug build
-# CCPLUS=g++-3.0
-# CFLAGS=-g -Wall -Werror
-# STRIPFLAGS=
-# Production build
-CCPLUS=g++
-CFLAGS=-O -Wall -Werror
-STRIPFLAGS=-Wl,-s
-#
+CXX=g++
 LDFLAGS=-lcurses
+CFLAGS=-Wall -Werror
 
-linchat: $(OBJECTS) $(HEADERS) Makefile
-	$(CCPLUS) -o linchat $(OBJECTS) $(LDFLAGS) $(STRIPFLAGS)
+## Debug build
+#CFLAGS+=-O0 -g
+#STRIPFLAGS=
+
+# Production build
+CFLAGS+=-O2
+STRIPFLAGS=-Wl,-s
+
+
+.PHONY: all clean
+
+all: $(PROGRAM)
+
+$(PROGRAM): $(OBJECTS)
+	$(CXX) -o $(PROGRAM) $(OBJECTS) $(LDFLAGS) $(STRIPFLAGS)
 
 .cpp.o: $(HEADERS) Makefile
-	$(CCPLUS) $(CFLAGS) -c $<
+	$(CXX) $(CFLAGS) -c $<
 
 clean:
-	rm -f $(OBJECTS)
-	rm -f linchat 
+	rm -f $(OBJECTS) $(PROGRAM)
