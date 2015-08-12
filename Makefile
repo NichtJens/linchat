@@ -39,10 +39,11 @@ STRIPFLAGS=-Wl,-s
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) $(LDFLAGS) $(STRIPFLAGS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(STRIPFLAGS)
 
 .cpp.o: $(HEADERS) Makefile
 	$(CXX) $(CFLAGS) -c $<
 
 clean:
 	rm -f $(OBJECTS) $(PROGRAM)
+
