@@ -197,6 +197,7 @@ static void InitSignals()
 
 void StartUp()
 {
+	cerr << ProgramName << endl;
 	InitSignals();
 	SaveUmask();
 	MakeDirectory();

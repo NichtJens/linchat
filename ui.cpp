@@ -215,7 +215,7 @@ void InitUi()
 	InitCurses();
 	SetupWindows();
 	inputline = "";
-	ShowMessage("*** ", ProgramName);
+	ShowMessage("*** ", "Welcome!");
 }
 
 void FinishUi()
