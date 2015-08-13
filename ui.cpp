@@ -215,7 +215,7 @@ void InitUi()
 	InitCurses();
 	SetupWindows();
 	inputline = "";
-	ShowMessage("*** ", "Welcome!");
+	ShowMessage("***", "Welcome!");
 }
 
 void FinishUi()
@@ -318,6 +318,7 @@ static void ShowMessageLine(MessageLine &msgline)
 {
 	// TODO: make them different colours, etc
 	string str(msgline.prefix);
+	str += " ";
 	str += msgline.message; // stick them together to wrap.
 	WrapString(str, mainwinw);
 	str = str.substr(msgline.prefix.length()); // cut the prefix back off

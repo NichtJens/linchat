@@ -339,11 +339,11 @@ static void ProcessNetworkEvent()
 			UpdateUsers();
 			break;
 		case Say:
-			snprintf(buf, sizeof(buf), "<%s> ", name);
+			snprintf(buf, sizeof(buf), "<%s>", name);
 			ShowMessage(buf, p.message);
 			break;
 		case Emote:
-			snprintf(buf, sizeof(buf), "%s ", name);
+			snprintf(buf, sizeof(buf), "%s", name);
 			ShowMessage(buf, p.message);
 			break;
 		case StatusUpdate:
@@ -436,7 +436,7 @@ void DoSay(const char *msg)
 	SendPacket(&p);
 	// Print what we said locally.
 	char buf[MaxMessageSize + 100];
-	snprintf(buf, sizeof(buf), "*%s* ", myusername);
+	snprintf(buf, sizeof(buf), "*%s*", myusername);
 	ShowMessage(buf, msg);
 	RefreshAll();
 }
