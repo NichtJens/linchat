@@ -350,7 +350,7 @@ static void ProcessNetworkEvent()
 			UpdateUsers();
 			break;
 		default:
-			ShowMessage("*** Error: unknown command (version mismatch?) from :", name);
+			ShowMessage("*** Error: unknown command (version mismatch?) from:", name);
 			break;
 	}
 	RefreshAll();
