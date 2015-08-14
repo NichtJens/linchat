@@ -31,6 +31,7 @@ using std::list;
 #include "ui.h"
 #include "common.h"
 #include "userstruct.h"
+#include "colorpairs.h"
 
 static WINDOW *mainwin = 0;
 static WINDOW *userwin = 0;
@@ -54,6 +55,8 @@ typedef list<UserListEntry>::const_iterator UsersIterator;
 typedef struct {
 	string prefix;
 	string message;
+	COLOR_TYPE prefix_color;
+	COLOR_TYPE message_color;
 } MessageLine;
 
 static list<MessageLine> messages;
@@ -84,7 +87,9 @@ void RefreshUsersWindow()
 	int row = 1;
 	for (UsersIterator i = users.begin(); i != users.end(); ++i)
 	{
+		wattron(userwin, COLOR_PAIR(pair_number(number_to_color(row-1), USRLST_BG_COLOR)));
 		mvwaddstr(userwin, row++, 2, (*i).name.c_str());
+		wattroff(userwin, COLOR_PAIR(pair_number(number_to_color(row-1), USRLST_BG_COLOR)));
 		wclrtoeol(userwin);
 	}
 	wclrtobot(userwin);
@@ -174,10 +179,10 @@ static void SetupWindows()
 	scrollok(mainwin, true);
 	wmove(mainwin, mainwinh-1, 0);
 	// Set up the users window colours
-	init_pair(1, COLOR_WHITE, COLOR_BLUE);
-	wcolor_set(userwin, 1, 0);
+	//init_pair(1, COLOR_WHITE, COLOR_BLUE);
+	//wcolor_set(userwin, 1, 0);
 	wattron(userwin, A_BOLD);
-	wbkgdset(userwin, COLOR_PAIR(1));
+	wbkgdset(userwin, COLOR_PAIR(pair_number(USRLST_FG_COLOR, USRLST_BG_COLOR)));
 	wclear(userwin);
 
 	RefreshUsersWindow();
@@ -191,6 +196,7 @@ static void InitCurses()
 	cbreak();
 	noecho();
 	start_color();
+	init_color_pairs();
 	refresh();
 }
 
@@ -324,10 +330,17 @@ static void ShowMessageLine(MessageLine &msgline)
 	str = str.substr(msgline.prefix.length()); // cut the prefix back off
 	// (assuming it hasn't been wraped)
 	waddstr(mainwin, "\n"); // Newline
+
+	wattron(mainwin, COLOR_PAIR(msgline.prefix_color));
 	wattron(mainwin, A_BOLD); // Put the prefix in bold
 	waddstr(mainwin, msgline.prefix.c_str());
 	wattroff(mainwin, A_BOLD); // put the line in normal
+	wattroff(mainwin, COLOR_PAIR(msgline.prefix_color));
+
+	wattron(mainwin, COLOR_PAIR(msgline.message_color));
 	waddstr(mainwin, str.c_str());
+	wattroff(mainwin, COLOR_PAIR(msgline.message_color));
+
 	//wprintw(mainwin, "\n%s", str.c_str());
 }
 
@@ -342,11 +355,13 @@ static void RefreshMainWindow()
 	}
 }
 
-void ShowMessage(const char *title, const char *msg)
+void ShowMessage(const char *title, const char *msg, COLOR_TYPE title_color, COLOR_TYPE msg_color)
 {
 	MessageLine msgline;
 	msgline.prefix = title;
 	msgline.message = msg;
+	msgline.prefix_color = title_color;
+	msgline.message_color = msg_color;
 	ShowMessageLine(msgline);
 	// Add it to our buffer.
 	messages.push_back(msgline);

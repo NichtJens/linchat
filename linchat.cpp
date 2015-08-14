@@ -37,6 +37,7 @@
 #include "common.h"
 #include "userstruct.h"
 #include "ui.h"
+#include "colorpairs.h"
 
 using std::cerr;
 using std::endl;
@@ -340,7 +341,7 @@ static void ProcessNetworkEvent()
 			break;
 		case Say:
 			snprintf(buf, sizeof(buf), "<%s>", name);
-			ShowMessage(buf, p.message);
+			ShowMessage(buf, p.message, number_to_color(p.slotnum));
 			break;
 		case Emote:
 			snprintf(buf, sizeof(buf), "%s", name);
@@ -437,7 +438,7 @@ void DoSay(const char *msg)
 	// Print what we said locally.
 	char buf[MaxMessageSize + 100];
 	snprintf(buf, sizeof(buf), "*%s*", myusername);
-	ShowMessage(buf, msg);
+	ShowMessage(buf, msg, number_to_color(p.slotnum));
 	RefreshAll();
 }
 
@@ -469,3 +470,4 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 }
+

@@ -21,6 +21,8 @@
 #ifndef LINCHAT_UI_H
 #define LINCHAT_UI_H
 
+#include "colorpairs.h"
+
 void InitUi();
 void FinishUi();
 void RefreshAll();
@@ -28,7 +30,7 @@ void RefreshUsersWindow();
 void ClearUsers();
 void AddUser(char statuschar, const char *name);
 void ProcessKeyboardEvent();
-void ShowMessage(const char *title, const char *msg);
+void ShowMessage(const char *title, const char *msg, COLOR_TYPE title_color=STD_FG_COLOR, COLOR_TYPE msg_color=STD_FG_COLOR);
 bool CheckUiResize();
 
 #endif  // LINCHAT_UI_H
