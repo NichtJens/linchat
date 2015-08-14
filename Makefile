@@ -19,8 +19,8 @@
 #
 
 PROGRAM=linchat
-OBJECTS=linchat.o ui.o
-HEADERS=ui.h common.h userstruct.h
+OBJECTS=linchat.o ui.o colorpairs.o
+HEADERS=ui.h common.h userstruct.h colorpairs.h
 CXX=g++
 LDFLAGS=-lcurses
 CFLAGS=-Wall -Werror
