@@ -334,13 +334,15 @@ static void ShowMessageLine(MessageLine &msgline)
 	wattron(mainwin, COLOR_PAIR(msgline.prefix_color));
 	wattron(mainwin, A_BOLD); // Put the prefix in bold
 	waddstr(mainwin, msgline.prefix.c_str());
-	wattroff(mainwin, A_BOLD); // put the line in normal
+	if (msgline.prefix.compare(0, 3, "***"))
+		wattroff(mainwin, A_BOLD); // put the line in normal
 	wattroff(mainwin, COLOR_PAIR(msgline.prefix_color));
 
 	wattron(mainwin, COLOR_PAIR(msgline.message_color));
 	waddstr(mainwin, str.c_str());
 	wattroff(mainwin, COLOR_PAIR(msgline.message_color));
 
+	wattroff(mainwin, A_BOLD); // remove bold
 	//wprintw(mainwin, "\n%s", str.c_str());
 }
 
