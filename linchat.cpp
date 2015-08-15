@@ -237,7 +237,9 @@ static void DisconnectDeadUser(int slot, char *sockpath)
 	// Remove their socket if poss.
 	unlink(sockpath);
 	// TODO: Tell the other users that they're gone.
-	ShowMessage("*** Error: user cannot be contacted, assumed dead:", scoreboard[slot].name);
+	char buf[MaxMessageSize + 100];
+	snprintf(buf, sizeof(buf), "%s cannot be contacted, assumed dead", scoreboard[slot].name);
+	ShowMessage("*** Error:", buf, pair_number(STD_FG_COLOR, STD_BG_COLOR), number_to_color(slot));
 	UpdateUsers();
 }
 
@@ -331,12 +333,12 @@ static void ProcessNetworkEvent()
 	{
 		case Connect:
 			snprintf(buf, sizeof(buf), "%s has arrived (%s)", name, p.message);
-			ShowMessage("***", buf);
+			ShowMessage("***", buf, pair_number(STD_FG_COLOR, STD_BG_COLOR), number_to_color(p.slotnum));
 			UpdateUsers();
 			break;
 		case Disconnect:
 			snprintf(buf, sizeof(buf), "%s has gone (%s)", name, p.message);
-			ShowMessage("***", buf);
+			ShowMessage("***", buf, pair_number(STD_FG_COLOR, STD_BG_COLOR), number_to_color(p.slotnum));
 			UpdateUsers();
 			break;
 		case Say:
@@ -351,7 +353,8 @@ static void ProcessNetworkEvent()
 			UpdateUsers();
 			break;
 		default:
-			ShowMessage("*** Error: unknown command (version mismatch?) from:", name);
+			snprintf(buf, sizeof(buf), "%s sent unknown command (version mismatch?)", name);
+			ShowMessage("*** Error:", buf, pair_number(STD_FG_COLOR, STD_BG_COLOR), number_to_color(p.slotnum));
 			break;
 	}
 	RefreshAll();
