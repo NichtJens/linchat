@@ -18,6 +18,8 @@
 //  USA.
 //
 
+#define WC_OPENING_KEY 195
+
 #include <string>
 #include <list>
 #include <curses.h>
@@ -257,6 +259,16 @@ void ProcessKeyboardEvent()
 		UnIdle();
 		// Ascii printable.
 		inputline += (char) k;
+		UpdateInput();
+		return;
+	}
+	if (k == WC_OPENING_KEY)
+	{
+		UnIdle();
+		// Wide chars consist of 2 keycodes:
+		// After the opening code is detected, read and (for now) ignore the closing code, append replacement string instead
+		wgetch(entrywin);
+		inputline += "_";
 		UpdateInput();
 		return;
 	}
