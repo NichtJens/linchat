@@ -32,3 +32,11 @@ The user names are now colored according to their respective slot number.
 
 However, ncurses knows only 8 colors (one of which is equal to the background color), hence after 7 users the colors will repeat.
 
+---
+
+## Another new feature: Weird character support
+
+Wide characters (like Ç, Ñ, or õ) are now converted to the most similar ASCII character (C, N, and o, respectively) or (for e.g. German umlauts: Ä, Ö, Ü, ä, ö, ü) replaced by a string of two ASCII letters (Ae, Oe, Ue, ae, oe, ue, respectively).
+
+For the full mapping see [here](fakewchars.cpp).
+
