@@ -11,7 +11,7 @@ std::string fake_wchar(int wc_closing_key)
 {
 	wc_closing_key -= 1<<7;
 	std::string result = "_";
-	if (wc_closing_key < strlen(mapping))
+	if ((unsigned) wc_closing_key < strlen(mapping))
 		result = std::string(1, mapping[wc_closing_key]);
 
 	switch (wc_closing_key)
