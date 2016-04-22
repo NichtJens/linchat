@@ -21,8 +21,18 @@ This is a very handy little program.
 However, the original website is not reachable anymore.
 
 The version hosted here contains several fixes for deprecated syntax, etc.
-It was tested to compile and run fine with gcc (up to) 4.8.2.
+It was tested to compile and run fine with gcc (up to) 4.8.2 and 5.2.1.
 It seems, the original was written for gcc 3.0 ...
+
+---
+
+## Installation
+
+- Needs an *ncurses* library and headers, e.g., get a `libncurses*-dev` package.
+
+- Type `make` and wait a few seconds ...
+
+- Copy the `linchat` binary to a directory in your $PATH.
 
 ---
 
